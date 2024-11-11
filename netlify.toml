@@ -1,0 +1,12 @@
+[build]
+  command = "npm run build"
+  publish = "dist" # Change this to the folder where your build output is located
+
+[dev]
+  command = "npm start"
+
+[context.production.environment]
+  NODE_ENV = "production"
+
+[context.deploy-preview.environment]
+  NODE_ENV = "development"
