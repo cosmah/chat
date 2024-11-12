@@ -1,43 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WebRTC</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
+    <title>WebRTC Video Chat</title>
+    <style>
+        .videos {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .video-container {
+            position: relative;
+            background: #f0f0f0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        video {
+            width: 100%;
+            max-width: 600px;
+            background: #2c2c2c;
+            border-radius: 8px;
+        }
+        
+        .controls {
+            margin: 1rem 0;
+        }
+        
+        button {
+            padding: 0.5rem 1rem;
+            margin: 0.5rem;
+            border-radius: 4px;
+            border: none;
+            background: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        
+        button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+        }
+        
+        input {
+            padding: 0.5rem;
+            margin: 0.5rem;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
     <h2>1. Start your Webcam</h2>
     <div class="videos">
-      <span>
-        <h3>Local Stream</h3>
-        <video id="webcamVideo" autoplay playsinline></video>
-      </span>
-      <span>
-        <h3>Remote Stream</h3>
-        <video id="remoteVideo" autoplay playsinline></video>
-      </span>
-
-
+        <div class="video-container">
+            <h3>Local Stream</h3>
+            <video id="webcamVideo" autoplay playsinline muted></video>
+        </div>
+        <div class="video-container">
+            <h3>Remote Stream</h3>
+            <video id="remoteVideo" autoplay playsinline></video>
+        </div>
     </div>
-
-    <button id="webcamButton">Start webcam</button>
-    <h2>2. Create a new Call</h2>
-    <button id="callButton" disabled>Create Call (offer)</button>
-
-    <h2>3. Join a Call</h2>
-    <p>Answer the call from a different browser window or device</p>
     
-    <input id="callInput" />
-    <button id="answerButton" disabled>Answer</button>
-
-    <h2>4. Hangup</h2>
-
-    <button id="hangupButton" disabled>Hangup</button>
-
-    <!-- script for webrtc -->
+    <div class="controls">
+        <button id="webcamButton">Start webcam</button>
+        
+        <h2>2. Create a new Call</h2>
+        <button id="callButton" disabled>Create Call (offer)</button>
+        
+        <h2>3. Join a Call</h2>
+        <p>Answer the call from a different browser window or device</p>
+        <input id="callInput" placeholder="Enter call ID" />
+        <button id="answerButton" disabled>Answer</button>
+        
+        <h2>4. Hangup</h2>
+        <button id="hangupButton" disabled>Hangup</button>
+    </div>
+    
     <script type="module" src="/main.js"></script>
-
-  </body>
+</body>
 </html>
