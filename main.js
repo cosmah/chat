@@ -118,6 +118,8 @@ webcamButton.onclick = async () => {
         callButton.disabled = false;
         answerButton.disabled = false;
         webcamButton.disabled = true;
+
+        console.log('Webcam and microphone initialized');
     } catch (err) {
         console.error('Error accessing media devices:', err);
         alert('Failed to access camera and microphone. Please ensure you have granted the necessary permissions.');
@@ -174,6 +176,8 @@ callButton.onclick = async () => {
 
         hangupButton.disabled = false;
         callButton.disabled = true;
+
+        console.log('Call created with ID:', currentCallDoc.id);
     } catch (err) {
         console.error('Error creating call:', err);
         alert('Failed to create call. Please try again.');
@@ -237,6 +241,25 @@ answerButton.onclick = async () => {
 
         hangupButton.disabled = false;
         answerButton.disabled = true;
+
+        console.log('Call answered with ID:', callId);
+
+        // Prompt user to activate camera
+        const activateCamera = confirm('Do you want to activate your camera?');
+        if (activateCamera) {
+            localStream = await navigator.mediaDevices.getUserMedia({
+                video: true,
+                audio: true
+            });
+
+            webcamVideo.srcObject = localStream;
+            localStreamTracks = localStream.getTracks();
+            localStreamTracks.forEach(track => {
+                pc.addTrack(track, localStream);
+            });
+
+            console.log('Camera activated');
+        }
     } catch (err) {
         console.error('Error answering call:', err);
         alert('Failed to answer call. Please check the call ID and try again.');
@@ -283,6 +306,8 @@ async function handleDisconnection() {
     answerButton.disabled = true;
     hangupButton.disabled = true;
     callInput.value = '';
+
+    console.log('Disconnected and UI reset');
 }
 
 hangupButton.onclick = handleDisconnection;
